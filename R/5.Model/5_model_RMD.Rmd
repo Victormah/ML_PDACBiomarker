@@ -1,0 +1,235 @@
+---
+title: "Tutorial5 : Modelling "
+author: "Tanakamol Mahawan"
+date: "2023-12-12"
+output: html_document
+---
+
+# Introduction
+
+In the modelling part, we will utilise Random Forest, a machine learning method in R, which is used for creating robust models by combining multiple decision trees.
+
+Random Forest generates numerous decision trees, each trained on a random subset of data and features. The final prediction is an average or a vote of all tree predictions. It is capable of handling classification, regression, and feature selection.
+
+Ranger is a fast implementation of Random Forest that uses recursive partitioning to split data into subsets. It’s efficient with memory and performs well on some datasets. It can handle classification, regression, survival analysis, and high-dimensional data.
+
+In the Caret package, specify ‘ranger’ as the method argument in the train function. Tuning parameters such as num.trees, mtry, splitrule, and min.node.size need to be provided. You can use tuneGrid to specify a grid of values for these parameters, or use other methods like tuneLength or cross-validation to find optimal values.
+
+
+# Loading Required Libraries
+
+Before we begin, make sure to install and load the required packages:
+
+```{r load_libraries, message=FALSE, warning=FALSE}
+library(smotefamily)
+library(MLmetrics)
+library(mlr3measures)
+#Load all custom functions
+source("custom_functions.r")
+```
+
+# Loading data and phenotype
+```{r }
+# Loads all data using in gene filtering
+load("Data_after_integration.rdata")
+```
+
+```{r ,eval=FALSE }
+#Train data 
+pdac_ABC <- read.csv("arsyn1ABC_rmOLE.csv",header=TRUE,stringsAsFactors = F,row.names = 1) 
+dim(pdac_ABC) # 308 1038
+#phenoytpe
+pheno_ABC <- read.csv("pheno_Arsyn1ABC",header = T, stringsAsFactors = T)
+dim(pheno_ABC) #308   7
+head(pheno_ABC)
+
+#Validation data 
+pdac_DE <- read.csv("arsyn1DE_rmOLE.csv",header=TRUE,stringsAsFactors = F,row.names = 1) #read csv into a dataframe
+dim(pdac_DE) 
+
+pheno_DE <- read.csv("pheno_Arsyn1DE",header = T, stringsAsFactors = T)
+dim(pheno_DE) 
+head(pheno_DE)
+
+pdac_ABC <- data.frame(pheno_ABC$CLASS,pdac_ABC )
+names(pdac_ABC)[1] <- "CLASS"
+pdac_ABC$CLASS <- as.character(pdac_ABC$CLASS)
+pdac_ABC$CLASS <- as.factor(pdac_ABC$CLASS)
+
+#Validation data 
+pdac_DE <- DE_data
+dim(pdac_DE) 
+
+pheno_DE <- DE_pheno
+dim(pheno_DE) 
+head(pheno_DE)
+
+pdac_DE <- data.frame(pheno_DE$CLASS,pdac_DE )
+names(pdac_DE)[1] <- "CLASS"
+pdac_DE$CLASS <- as.character(pdac_DE$CLASS)
+pdac_DE$CLASS <- as.factor(pdac_DE$CLASS)
+```
+
+
+```{r ,echo=FALSE}
+#Train data 
+pdac_ABC <- ABC_data
+dim(pdac_ABC) # 308 1038
+
+pheno_ABC <- ABC_pheno
+dim(pheno_ABC) #308   7
+head(pheno_ABC)
+
+pdac_ABC <- data.frame(pheno_ABC$CLASS,pdac_ABC )
+names(pdac_ABC)[1] <- "CLASS"
+pdac_ABC$CLASS <- as.character(pdac_ABC$CLASS)
+pdac_ABC$CLASS <- as.factor(pdac_ABC$CLASS)
+
+#Validation data 
+pdac_DE <- DE_data
+dim(pdac_DE) 
+
+pheno_DE <- DE_pheno
+dim(pheno_DE) 
+head(pheno_DE)
+
+pdac_DE <- data.frame(pheno_DE$CLASS,pdac_DE )
+names(pdac_DE)[1] <- "CLASS"
+pdac_DE$CLASS <- as.character(pdac_DE$CLASS)
+pdac_DE$CLASS <- as.factor(pdac_DE$CLASS)
+```
+
+```{r }
+#Overlapping genes
+Overlap_genes <- read.csv("Overlap_genes.csv",header = T)
+Overlap_genes <- Overlap_genes$Var1
+print(Overlap_genes)
+# 15 genes 
+
+```
+
+# Model1, Train and test model by ABC(train) data
+
+```{r ,eval= FALSE }
+
+res_ABC  <- Model_RF(pdac_ABC = pdac_ABC , geneset = Overlap_genes , nround = 100)
+
+write.csv(res_ABC,"res_ABC.csv" )
+
+```
+# See the results
+```{r}
+print(res_ABC[,101:103])
+```
+
+
+# Model2, Train and test model by DE(Validation) data
+
+```{r,eval= FALSE }
+
+res_DE  <- Model_RF(pdac_DE = pdac_DE , geneset = Overlap_genes , nround = 100)
+
+write.csv(res_DE,"res_DE.csv" )
+
+```
+# See the results
+```{r}
+print(res_DE[,101:103])
+```
+
+
+# Model3 Validation ,train by ABC data and test model by DE data
+
+# 1. Set train and test sets
+```{r }
+train_df <- pdac_ABC
+test_df <-  pdac_DE
+geneset <- Overlap_genes
+
+#convert CLASS to factor 
+train_df$CLASS <- as.factor(train_df$CLASS )
+test_df$CLASS <- as.factor(test_df$CLASS )
+
+train.data  <- train_df[ ,which( colnames(train_df) %in% geneset ) ] 
+dim(train.data)
+
+test.data  <- test_df[ ,which( colnames(test_df) %in% geneset) ] 
+dim(test.data)
+
+train.data  <- cbind(train_df$CLASS , train.data)
+names(train.data)[1] <- "CLASS"
+
+test.data  <- cbind(test_df$CLASS , test.data)
+names(test.data)[1] <- "CLASS"
+```
+
+# 2. 5-fold cross validation 
+
+We use it for Hyperparameters Tuning. 
+
+The data is divided into k subsets. Suppose we have divided data into 5 folds i.e. K=5. Now we have 5 sets of data to train and test our model. So the model will get trained and tested 5 times, but for every iteration we will use one fold as test data and rest all as training data.(https://www.kaggle.com/code/abdokamr/cross-validation-hyperparameters-tuning)
+
+```{r }
+# 5-fold CV
+ctrlspecs <- trainControl(method = "cv" , number = 5,
+                          savePredictions = "all",
+                          classProbs = TRUE) 
+
+```
+
+# 3. Resampling technique by ADASYN. 
+
+ADASYN, or Adaptive Synthetic Sampling, is a widely used and straightforward resampling method for addressing imbalanced datasets in machine learning. It enhances the classification performance of classes that are underrepresented. The technique involves creating synthetic samples from the minority class, taking into account their resemblance to the majority class.
+
+While ADASYN shares similarities with SMOTE, it distinguishes itself by employing a two-step nearest neighbors process to produce synthetic samples. Initially, it uses the entire dataset to identify nearest neighbors for the underrepresented class. Following that, it conducts a second pass exclusively within the underrepresented class.
+
+ADASYN’s implementation can be achieved through various algorithms, including k-nearest neighbors, decision trees, and neural networks.
+
+```{r }
+#We use ADASYN to balance minority class (non-metastasis) in train set only
+
+genData_ADAS = ADAS(X= train.data[,-1], target = train.data$CLASS ,K=5  )
+train_df_adas <- genData_ADAS[["data"]]  
+# keep CLASS as a df , last column
+CLASS_df <- train_df_adas[ncol(train_df_adas)]
+# move CLASS to first column 
+train_df_adas <- cbind(train_df_adas[ncol(train_df_adas)], train_df_adas[,-ncol(train_df_adas)] )
+names(train_df_adas)[1] <- "CLASS"
+train.data <- train_df_adas
+dim(train.data)
+table(train.data$CLASS) #Check balance of class distribution again
+
+```
+
+# 4.Build RF model using ranger 
+
+```{r }
+orig_fit <- caret::train(CLASS ~ .,
+                         data = train.data,
+                         method = "ranger",
+                         verbose = FALSE,
+                         trControl = ctrlspecs,
+                         metric = 'Accuracy',
+                         tuneLength = 10)
+```
+
+# 5.Model testing / validation
+
+```{r }
+
+# Prediction 
+prob_RF <- predict(orig_fit, test.data, type="prob")
+pred_RF <- predict(orig_fit, test.data)
+res_RF <- Res_mod(prob = prob_RF , pred = pred_RF ,test_data = test.data)
+res_validate <- data.frame(rownames(res_DE),res_RF)
+print(res_validate)
+
+#write.csv(res_validate,"res_validate.csv" )
+```
+
+
+#Save sessions
+```{r, eval=FALSE}
+save.image("5_model.rdata")
+```
+
