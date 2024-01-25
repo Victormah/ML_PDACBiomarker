@@ -16,7 +16,7 @@ You should follow the R codes by following the sections,
 3.Data_integration : Data integration and batch effect correction
 4.Variable selection : A combination of variable selection methods
 5.Model : Random Forest model (RF) in training and validation 
-All data can be accessed in the folder "data_R", where you can use preloaded data.Rdata files : Data_before_integration.Rdata is used for section 1-3 and Data_after_integration.Rdata is used for section 4-5.
+All data can be accessed in the folder "data_R". Some large files are available here https://drive.google.com/drive/folders/1PapRwJpQDnngSl2IoGPZi7dOGpz_DzPL?usp=sharing , where you can use preloaded data.Rdata files : Data_before_integration.Rdata is used for section 1-3 and Data_after_integration.Rdata is used for section 4-5.
 A custom function for all sections is "custom_functions.r"
 ## Code Explanation
 Please find a detailed explanation in the “Tutorials” folder.
