@@ -21,11 +21,15 @@ A custom function for all sections is "custom_functions.r"
 ## Code Explanation
 Please find a detailed explanation in the “Tutorials” folder.
 
+## Data sources and processing
+
+## Overview of the workflow
+
 ## Output
 You can find the output from codes in folder “Outputs” including variable selection results and RF model performance.
 
 ## Contact 
-More information and questions can be contacted at Dr Eva Caamaño Gutiérrez (caamano@liverpool.ac.uk) and Tanakamol Mahawan (m.tanakamol@gmail.com)
+More information and questions can be contacted at Dr Eva Caamaño Gutiérrez @EvaCaamano(caamano@liverpool.ac.uk) and Tanakamol Mahawan (m.tanakamol@gmail.com and t.mahawan@liverpoo.ac.uk)
 
 ## License
 TBA 
