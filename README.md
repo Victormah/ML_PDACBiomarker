@@ -4,7 +4,7 @@
 Robust and Consistent Biomarker Identification of Pancreatic Ductal Adenocarcinoma Metastasis by Machine Learning Approach
 
 ## Description
-We provided the full R codes and data for biomarker discovery using RNA seq data from cancer patients, including R codes , Rmarkdown codes, and Tutorials (HTML) in 5 sections . This is a part of our publication titled “Robust and Consistent Biomarker Identification of Pancreatic Ductal Adenocarcinoma Metastasis by Machine Learning Approach” in BMC Medical Informatics and Decision Making Journal. 
+We provided the full R codes and data for biomarker discovery using RNA seq data from cancer patients, including R code, Rmarkdown codes, and Tutorials (HTML) in 5 sections. This is a part of our publication titled “Robust and Consistent Biomarker Identification of Pancreatic Ductal Adenocarcinoma Metastasis by Machine Learning Approach” in BMC Medical Informatics and Decision Making Journal. 
 
 ## Installation
 Please follow the tutorials and R codes; we have a custom function that includes many R packages that need to be installed and packages in each section. 
@@ -29,7 +29,7 @@ Please find a detailed explanation in the “Tutorials” folder.
 You can find the output from codes in folder “Outputs” including variable selection results and RF model performance.
 
 ## Contact 
-More information and questions can be contacted at Dr Eva Caamaño Gutiérrez @EvaCaamano(caamano@liverpool.ac.uk) and Tanakamol Mahawan (m.tanakamol@gmail.com and t.mahawan@liverpoo.ac.uk)
+More information and questions can be contacted at Dr Eva Caamaño Gutiérrez @EvaCaamano (caamano@liverpool.ac.uk) and Tanakamol Mahawan (m.tanakamol@gmail.com and t.mahawan@liverpoo.ac.uk)
 
 ## License
 TBA 
