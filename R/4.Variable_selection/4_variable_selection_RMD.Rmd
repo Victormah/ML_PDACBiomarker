@@ -78,7 +78,7 @@ abcSplits<-applyPrepData(data_train = abc,prepData = prepData,factor_var = facto
 LASSO is used first.
 ```{r, eval=FALSE}
 
-abc_LassoRes<-applyMultiVarSelectionForCrossVal_withModel(inputListwSplits = abcSplits,functionSelection = ,thresMod = 80,ntree = 500 )
+abc_LassoRes<-applyMultiVarSelectionForCrossVal_withModel(inputListwSplits = abcSplits,functionSelection = TwoClassLasso,thresMod = 80,ntree = 500 )
 
 
 abc_LassoRes_concRes<-as.data.frame(table(concatenateVarSelec(abc_LassoRes)))
