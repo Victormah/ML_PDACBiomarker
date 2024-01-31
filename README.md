@@ -31,6 +31,5 @@ You can find the output from codes in folder “Outputs” including variable se
 ## Contact 
 More information and questions can be contacted at Dr Eva Caamaño Gutiérrez @EvaCaamano (caamano@liverpool.ac.uk) and Tanakamol Mahawan (m.tanakamol@gmail.com and t.mahawan@liverpoo.ac.uk)
 
-## License
-TBA 
+
 
