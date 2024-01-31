@@ -14,31 +14,29 @@ Welcome to the tutorial for the machine learning pipeline used for PDAC biomarke
 
 ## TMM_norm
 
-<a href="https://raw.githack.com/Victormah/ML_PDACBiomarker/main/Tutorials/1_TMM_norm.html" target="_blank">Click here to view the tutorial</a>
+[TMM_norm Tutorial](https://raw.githack.com/Victormah/ML_PDACBiomarker/main/Tutorials/1_TMM_norm.html)
 
 ---
 
 ## Gene_filter
 
-<a href="https://raw.githack.com/Victormah/ML_PDACBiomarker/main/Tutorials/2_Filter_genes.html" target="_blank">Click here to view the tutorial</a>
+[Gene_filter Tutorial](https://raw.githack.com/Victormah/ML_PDACBiomarker/main/Tutorials/2_Filter_genes.html)
 
 ---
 
 ## Data_integration
 
-<a href="https://raw.githack.com/Victormah/ML_PDACBiomarker/main/Tutorials/3_Data_integration.html" target="_blank">Click here to view the tutorial</a>
+[Click here to view the tutorial](https://raw.githack.com/Victormah/ML_PDACBiomarker/main/Tutorials/3_Data_integration.html)
+
 
 ---
 
 ## Variable_selection
 
-<a href="https://raw.githack.com/Victormah/ML_PDACBiomarker/main/Tutorials/4_variable_selection.html" target="_blank">Click here to view the tutorial</a>
+[Variable_selection Tutorial](https://raw.githack.com/Victormah/ML_PDACBiomarker/main/Tutorials/4_variable_selection.html)
 
 ---
 
 ## Model
 
-<a href="https://raw.githack.com/Victormah/ML_PDACBiomarker/main/Tutorials/5_model.html" target="_blank">Click here to view the tutorial</a>
-```
-
-Now, the links will open in a new tab when clicked.
+[Model Tutorial](https://raw.githack.com/Victormah/ML_PDACBiomarker/main/Tutorials/5_model.html)
