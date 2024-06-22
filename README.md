@@ -2,7 +2,10 @@
 [![DOI](https://zenodo.org/badge/748142894.svg)](https://zenodo.org/doi/10.5281/zenodo.10949601)
 
 ## Project Title : 
-Robust and Consistent Biomarker Candidates Identification by a Machine Learning Approach applied to Pancreatic Ductal Adenocarcinoma Metastasis 
+Robust and consistent biomarker candidates identification by a machine learning approach applied to pancreatic ductal adenocarcinoma metastasis
+
+## Publication
+Mahawan, T., Luckett, T., Mielgo Iza, A. et al. Robust and consistent biomarker candidates identification by a machine learning approach applied to pancreatic ductal adenocarcinoma metastasis. BMC Med Inform Decis Mak 24 (Suppl 4), 175 (2024). https://doi.org/10.1186/s12911-024-02578-0
 
 ## Description
 We provided the full R codes and data for biomarker discovery using RNA seq data from cancer patients, including R code, Rmarkdown codes, and Tutorials (HTML) in 5 sections. This is a part of our publication titled “Robust and Consistent Biomarker Identification of Pancreatic Ductal Adenocarcinoma Metastasis by Machine Learning Approach” in BMC Medical Informatics and Decision Making Journal. 
